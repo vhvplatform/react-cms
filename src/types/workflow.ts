@@ -1,5 +1,7 @@
 // Scheduling and Workflow Types
 
+import type { Article } from './article';
+
 export interface ScheduledPublish {
   id: string;
   articleId: string;
@@ -54,7 +56,7 @@ export interface SearchFilters {
 }
 
 export interface SearchResult {
-  articles: any[];
+  articles: Article[];
   total: number;
   page: number;
   pageSize: number;

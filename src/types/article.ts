@@ -45,7 +45,7 @@ export interface BaseArticle {
   featuredImage?: string;
   tags: string[];
   categories: string[];
-  metadata: Record<string, any>;
+  metadata: Record<string, unknown>;
   publishedAt?: Date;
   scheduledPublishAt?: Date;
   expiresAt?: Date;

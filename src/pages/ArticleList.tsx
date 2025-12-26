@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { articleService } from '@/services/articleService';
 import { Article, ArticleType, ArticleStatus } from '@/types';
@@ -10,14 +10,10 @@ export const ArticleList: React.FC = () => {
   const [selectedType, setSelectedType] = useState<ArticleType | ''>('');
   const [selectedStatus, setSelectedStatus] = useState<ArticleStatus | ''>('');
 
-  useEffect(() => {
-    loadArticles();
-  }, [selectedType, selectedStatus]);
-
-  const loadArticles = async () => {
+  const loadArticles = useCallback(async () => {
     setLoading(true);
     try {
-      const filters: any = {};
+      const filters: { type?: ArticleType; status?: ArticleStatus } = {};
       if (selectedType) filters.type = selectedType;
       if (selectedStatus) filters.status = selectedStatus;
       
@@ -28,7 +24,11 @@ export const ArticleList: React.FC = () => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [selectedType, selectedStatus]);
+
+  useEffect(() => {
+    loadArticles();
+  }, [loadArticles]);
 
   const getStatusBadgeClass = (status: ArticleStatus) => {
     switch (status) {
